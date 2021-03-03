@@ -4,6 +4,7 @@ Java REST web service application with Weather and Location Timezone API.
 API requests:
 
 GET /weather/{city_name} 
+
 GET /weather?city=""
 Return weather information about city
 
