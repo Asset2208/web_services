@@ -18,6 +18,7 @@ import java.io.IOException;
 @Path("/geo")
 public class GeoLocationServiceImpl implements GeoLocationService {
     private final OkHttpClient client = new OkHttpClient();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @GET
@@ -32,6 +33,8 @@ public class GeoLocationServiceImpl implements GeoLocationService {
                 .build();
         try {
             Response response = client.newCall(request).execute();
+            Location location = objectMapper.readValue(response.body().string(), Location.class);
+            System.out.println(location.toString());
             System.out.println(response);
             return response.body().string();
         } catch (IOException e) {
@@ -49,8 +52,6 @@ public class GeoLocationServiceImpl implements GeoLocationService {
     public Timezone getTimeZone(@QueryParam("zip_code") String zip_code) {
         String url = "https://www.zipcodeapi.com/rest/7eGrRfQxBlf4I0XahwcdOV6Prbfhf5NDA0XbRHXPIn51KCXtaHFDQhrkesMWOjRJ/info.json/" + zip_code + "/degrees";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -58,6 +59,7 @@ public class GeoLocationServiceImpl implements GeoLocationService {
         try {
             Response response = client.newCall(request).execute();
             Location location = objectMapper.readValue(response.body().string(), Location.class);
+            System.out.println(location.toString());
             return location.getTimezone();
         } catch (IOException e) {
             e.printStackTrace();
