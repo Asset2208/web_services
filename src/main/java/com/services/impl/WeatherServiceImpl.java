@@ -1,5 +1,6 @@
 package com.services.impl;
 
+import com.log.Logged;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -15,6 +16,7 @@ public class WeatherServiceImpl implements WeatherService {
     private final OkHttpClient client = new OkHttpClient();
 
     @Override
+    @Logged
     @GET
     @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
